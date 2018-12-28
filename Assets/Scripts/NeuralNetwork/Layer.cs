@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Layer : MonoBehaviour
+public class Layer
 {
     List<Neuron> neurons;
 
     public Layer(int inputsNumber, int numberOfNeurons, AbstractFunction activationFunction)
     {
+        neurons = new List<Neuron>();
         for (int i = 0; i < numberOfNeurons; i++)
         {
-            neurons.Add(new Neuron(inputsNumber, activationFunction));
+            neurons.Add(new Neuron(inputsNumber + 1, activationFunction));
         }
     }
 

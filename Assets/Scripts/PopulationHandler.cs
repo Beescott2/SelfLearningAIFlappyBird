@@ -22,22 +22,6 @@ public class PopulationHandler : MonoBehaviour {
         return false;
     }
 
-    private float distanceClosestObstacle()
-    {
-        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        float minDist = float.MaxValue;
-
-        foreach (GameObject obstacle in obstacles)
-        {
-            if (obstacle.transform.position.x - transform.position.x < minDist)
-            {
-                minDist = obstacle.transform.position.x;
-            }
-        }
-
-        return minDist;
-    }
-
     static int SortByFitness(Bird b1, Bird b2)
     {
         return b1.getFitness().CompareTo(b2.getFitness());
@@ -51,8 +35,6 @@ public class PopulationHandler : MonoBehaviour {
         {
             m_bird = Instantiate(l_birdPrefab);
             m_birds.Add(m_bird);
-            // random neural networks
-            // TODO ...
         }
     }
 
@@ -60,52 +42,55 @@ public class PopulationHandler : MonoBehaviour {
 	void Start () {
         createPopulation();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		// Use neural network for all the population
-        foreach (Bird bird in m_birds)
-        {
-            // Only once
-            if (bird.isAlive())
-            {
-                // Calculate fitness
-                // Compute total distance travelled
-                float totalDistance = transform.position.x - l_travelledDistance.transform.position.x;
-                float fitness = totalDistance - distanceClosestObstacle();
 
-                bird.setFitness(fitness);
-            }
-        }
+    //// Update is called once per frame
+    //void Update () {
+    //	// If all the population is dead
+    //       if (!populationAlive())
+    //       {
+    //           // Evaluate the current population to the next one
+    //           // Sort the birds by their fitness
+    //           m_birds.Sort(SortByFitness);
 
-        // If all the population is dead
+    //           // Select the top 4 birds
+    //           List<Bird> newBreed = new List<Bird>();
+    //           newBreed.Add(m_birds[0]);
+    //           newBreed.Add(m_birds[1]);
+    //           newBreed.Add(m_birds[2]);
+    //           newBreed.Add(m_birds[3]);
+
+    //           // Create 1 offspring (crossover) producted from the first two
+    //           // TODO ...
+
+    //           // Create 3 offspring (crossover) producted from two random winners
+    //           int randomWinner1 = Random.Range(0, 3);
+    //           int randomWinner2;
+    //           do
+    //           {
+    //               randomWinner2 = Random.Range(0, 3);
+    //           } while (randomWinner2 != randomWinner1);
+    //           // TODO ...
+
+    //           // Create 2 offspring, copy of two randoml winners
+
+    //       }
+    //}
+
+    void Update()
+    {
         if (!populationAlive())
         {
-            // Evaluate the current population to the next one
-            // Sort the birds by their fitness
-            m_birds.Sort(SortByFitness);
-
-            // Select the top 4 birds
-            List<Bird> newBreed = new List<Bird>();
-            newBreed.Add(m_birds[0]);
-            newBreed.Add(m_birds[1]);
-            newBreed.Add(m_birds[2]);
-            newBreed.Add(m_birds[3]);
-
-            // Create 1 offspring (crossover) producted from the first two
-            // TODO ...
-
-            // Create 3 offspring (crossover) producted from two random winners
-            int randomWinner1 = Random.Range(0, 3);
-            int randomWinner2;
-            do
-            {
-                randomWinner2 = Random.Range(0, 3);
-            } while (randomWinner2 != randomWinner1);
-            // TODO ...
-
-            // Create 2 offspring, copy of two randoml winners
-
+            removeObstacles();
+            removePopulation();
+            createPopulation();
         }
-	}
+    }
+
+    void removeObstacles()
+    {
+        List<GameObject> obstacles = new List<GameObject>();
+        obstacles.AddRange(GameObject.FindGameObjectsWithTag("Obstacle"));
+
+
+    }
 }

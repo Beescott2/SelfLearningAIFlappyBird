@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NeuralNetwork : MonoBehaviour
+public class NeuralNetwork
 {
     List<Layer> layers;
 
@@ -10,6 +10,7 @@ public class NeuralNetwork : MonoBehaviour
     {
         // first layer - inputs layer
         // For now there will a neuron for each input
+        layers = new List<Layer>();
         this.layers.Add(new Layer(inputsNumber, inputsNumber, activationFunction));
 
         // Hidden layers

@@ -11,6 +11,6 @@ public class Sigmoid : AbstractFunction
 
     public override double computeOutput(double y)
     {
-        return 1.0 / (1.0 + Mathf.Exp(-(float)y));
+        return 1.0 / (1.0 + Mathf.Pow(2.72f, (float)-y));
     }
 }

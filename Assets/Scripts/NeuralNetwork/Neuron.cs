@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Neuron : MonoBehaviour
+public class Neuron
 {
     private const double LEARNING_RATE = 0.01;
     private List<double> weights;
@@ -27,7 +28,7 @@ public class Neuron : MonoBehaviour
         this.weights = new List<double>();
         for (int i = 0; i < weightsNumber; i++)
         {
-            this.weights.Add((double)Random.Range(0f, 1f));
+            this.weights.Add((double) UnityEngine.Random.Range(0f, 1f));
         }
     }
 

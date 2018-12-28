@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AbstractFunction : MonoBehaviour
+public abstract class AbstractFunction
 {
     /**
        * Compute sum of inputs
@@ -13,7 +13,7 @@ public abstract class AbstractFunction : MonoBehaviour
     public double computeY(List<double> inputs, Neuron neuron)
     {
         if (inputs.Count + 1 != neuron.getWeights().Count)
-            print("Size miss match between inputs size and weights size");
+            Debug.Log("Size miss match between inputs size and weights size");
 
         double sum = 0.0;
         int i;
