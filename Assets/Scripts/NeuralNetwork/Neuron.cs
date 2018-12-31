@@ -15,6 +15,17 @@ public class Neuron
         this.initWeights(weightsNumber);
     }
 
+    // Copy the weights of a given neuron
+    public Neuron(Neuron neuronToClone)
+    {
+        this.weights = new List<double>();
+        this.activationFunction = neuronToClone.getActivationFunction();
+        for(int i = 0; i < neuronToClone.getWeights().Count; i++)
+        {
+            this.weights.Add(neuronToClone.getWeights()[i]);
+        }
+    }
+
 
     /**
      * Generate random weights for the neuron
@@ -56,6 +67,11 @@ public class Neuron
         this.weights[i] = this.weights[i] + deltaError * Neuron.LEARNING_RATE * this.activationFunction.computeDerivative(1.0);
 
         return deltaError;
+    }
+
+    private AbstractFunction getActivationFunction()
+    {
+        return this.activationFunction;
     }
 
 }

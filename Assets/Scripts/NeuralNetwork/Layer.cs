@@ -6,6 +6,12 @@ public class Layer
 {
     List<Neuron> neurons;
 
+    // Used for the factory
+    public Layer()
+    {
+        this.neurons = new List<Neuron>();
+    }
+
     public Layer(int inputsNumber, int numberOfNeurons, AbstractFunction activationFunction)
     {
         neurons = new List<Neuron>();
@@ -30,5 +36,10 @@ public class Layer
     public List<Neuron> getNeurons()
     {
         return this.neurons;
+    }
+
+    public void setNeurons(List<Neuron> neurons)
+    {
+        this.neurons = neurons;
     }
 }
