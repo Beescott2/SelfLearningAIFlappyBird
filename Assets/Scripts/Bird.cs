@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bird : MonoBehaviour {
 
-    public GameObject l_distanceTravelled;
+    private GameObject l_distanceTravelled;
 
     private bool m_isAlive;
     private Rigidbody2D m_rb;
@@ -15,7 +15,7 @@ public class Bird : MonoBehaviour {
 
     GameObject closestObstacle()
     {
-        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("ObstaclePrefab");
         float minDist = float.MaxValue;
         GameObject resObstacle = null;
 
@@ -51,6 +51,7 @@ public class Bird : MonoBehaviour {
 
     void death()
     {
+        l_distanceTravelled = GameObject.FindGameObjectWithTag("TravelledDistance");
         m_score = transform.position.x - l_distanceTravelled.transform.position.x;
         computeFitness();
         m_isAlive = false;
@@ -75,11 +76,9 @@ public class Bird : MonoBehaviour {
             List<double> neural_inputs = new List<double>();
             neural_inputs.Add(heightDistanceClosestObstacle());
             neural_inputs.Add(widthDistanceClosestObstacle());
-
-            //print("inputs : " + heightDistanceClosestObstacle() + " " + widthDistanceClosestObstacle());
+            
 
             double neuralOut = m_neuralNetwork.computeOutputs(neural_inputs)[0];
-            //print("neuralOut : " + neuralOut);
 
             // Change velocity only if Neural Network Out > 0.5
             if (neuralOut > 0.5)

@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PopulationHandler : MonoBehaviour {
 
     public int l_numberInitialPopulation;
     public Bird l_birdPrefab;
     public GameObject l_travelledDistance;
+    public ObstacleGenerator l_og;
+
+    public Text l_score;
+    public Text l_generation;
+
 
     private List<Bird> m_birds;
     private Bird m_bird;
@@ -41,7 +47,8 @@ public class PopulationHandler : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         createPopulation();
-	}
+        l_og.invokeGenerateObstacle();
+    }
 
     //// Update is called once per frame
     //void Update () {
@@ -80,8 +87,10 @@ public class PopulationHandler : MonoBehaviour {
     {
         if (!populationAlive())
         {
+            updateUI();
             removeObstacles();
             removePopulation();
+            l_og.invokeGenerateObstacle();
             createPopulation();
         }
     }
@@ -89,8 +98,41 @@ public class PopulationHandler : MonoBehaviour {
     void removeObstacles()
     {
         List<GameObject> obstacles = new List<GameObject>();
-        obstacles.AddRange(GameObject.FindGameObjectsWithTag("Obstacle"));
+        obstacles.AddRange(GameObject.FindGameObjectsWithTag("ObstaclePrefab"));
 
+        for (int i=obstacles.Count-1; i>0; i--)
+        {
+            GameObject obstacle = obstacles[i];
+            obstacles.Remove(obstacle);
+            Destroy(obstacle);
+        }
+        l_og.resetObstacles();
+    }
 
+    void removePopulation()
+    {
+        List<GameObject> birds = new List<GameObject>();
+        birds.AddRange(GameObject.FindGameObjectsWithTag("Bird"));
+
+        for (int i = birds.Count - 1; i > 0; i--)
+        {
+            GameObject bird = birds[i];
+            birds.Remove(bird);
+            Destroy(bird);
+        }
+    }
+
+    void updateUI()
+    {
+        int bestScore = int.Parse(l_score.text);
+        foreach (Bird bird in m_birds)
+        {
+            if (bird.getFitness() > bestScore)
+                bestScore = (int) bird.getFitness();
+
+            l_score.text = bestScore.ToString();
+        }
+
+        l_generation.text = (int.Parse(l_generation.text) + 1).ToString();
     }
 }

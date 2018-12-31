@@ -9,17 +9,20 @@ public class ObstacleGenerator : MonoBehaviour {
     private List<GameObject> m_obstacles;
     private GameObject m_obstacle;
 
+    private int obstacleId;
+
 	// Use this for initialization
 	void Start () {
-        InvokeRepeating("generateObstacle", 0.0f, 1.5f);
         m_obstacles = new List<GameObject>();
+        obstacleId = 0;
 	}
 
     void Update()
     {
+        print(m_obstacles.Count);
         for (int i=m_obstacles.Count - 1; i>0; i--)
         {
-            if (m_obstacles[i].transform.position.x < -20)
+            if (m_obstacles[i].transform.position.x < -20 && m_obstacles[i] != null)
             {
                 GameObject obstacle = m_obstacles[i];
                 m_obstacles.Remove(obstacle);
@@ -27,11 +30,24 @@ public class ObstacleGenerator : MonoBehaviour {
             }
         }
     }
+    
+    public void resetObstacles()
+    {
+        m_obstacles.Clear();
+    }
+
+    public void invokeGenerateObstacle()
+    {
+        CancelInvoke("generateObstacle");
+        InvokeRepeating("generateObstacle", 0.0f, 1.5f);
+    }
 
     void generateObstacle()
     {
         m_obstacle = Instantiate(l_obstacle);
-        m_obstacle.transform.position = new Vector3(15f, Random.Range(2.5f, -3.5f), -1f);
+        m_obstacle.transform.position = new Vector3(10f, Random.Range(2.5f, -3.5f), -1f);
         m_obstacles.Add(m_obstacle);
+        m_obstacle.name = "Obstacle" + obstacleId;
+        obstacleId++;
     }
 }

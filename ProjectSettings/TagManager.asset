@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Obstacle
   - Bird
+  - ObstaclePrefab
+  - Score
+  - TravelledDistance
   layers:
   - Default
   - TransparentFX
