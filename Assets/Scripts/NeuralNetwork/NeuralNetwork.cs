@@ -6,6 +6,12 @@ public class NeuralNetwork
 {
     List<Layer> layers;
 
+    // Used for the factory
+    public NeuralNetwork()
+    {
+        layers = new List<Layer>();
+    }
+
     public NeuralNetwork(int inputsNumber, int numberOfHiddenLayers, int hiddenLayersSize, int numberOfOutput, AbstractFunction activationFunction)
     {
         // first layer - inputs layer
@@ -38,5 +44,20 @@ public class NeuralNetwork
         }
 
         return layersOutputs[this.layers.Count - 1];
+    }
+
+    public void addRandomLayer(int inputsNumber, int hiddenLayersSize, AbstractFunction activationFunction)
+    {
+        this.layers.Add(new Layer(inputsNumber, hiddenLayersSize, activationFunction));
+    }
+
+    public void addLayer(Layer layer)
+    {
+        this.layers.Add(layer);
+    }
+
+    public List<Layer> getLayers()
+    {
+        return this.layers;
     }
 }
