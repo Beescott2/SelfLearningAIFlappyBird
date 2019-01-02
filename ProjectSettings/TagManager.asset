@@ -9,6 +9,7 @@ TagManager:
   - ObstaclePrefab
   - Score
   - TravelledDistance
+  - Generation
   layers:
   - Default
   - TransparentFX

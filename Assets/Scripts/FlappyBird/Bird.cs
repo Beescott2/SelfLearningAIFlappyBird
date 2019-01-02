@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bird : MonoBehaviour {
-
+    
     private GameObject l_distanceTravelled;
 
     private bool m_isAlive;
     private Rigidbody2D m_rb;
     private float m_fitness;
-    private float m_score;
     private NeuralNetwork m_neuralNetwork;
     private Vector3 deathPosition;
 
@@ -46,13 +46,12 @@ public class Bird : MonoBehaviour {
 
     void computeFitness()
     {
-        m_fitness = transform.position.x - l_distanceTravelled.transform.position.x;
+        m_fitness = (transform.position.x - l_distanceTravelled.transform.position.x) - (float) widthDistanceClosestObstacle();
     }
 
     void death()
     {
         l_distanceTravelled = GameObject.FindGameObjectWithTag("TravelledDistance");
-        m_score = transform.position.x - l_distanceTravelled.transform.position.x;
         computeFitness();
         m_isAlive = false;
         deathPosition = transform.position;
@@ -64,9 +63,12 @@ public class Bird : MonoBehaviour {
         m_rb = GetComponent<Rigidbody2D>();
         m_isAlive = true;
         m_fitness = 0;
-        m_score = 0;
 
-        m_neuralNetwork = new NeuralNetwork(2, 1, 6, 1, new Linear());
+        //print(GameObject.FindGameObjectWithTag("Generation").GetComponent<Text>().text);
+        if (int.Parse(GameObject.FindGameObjectWithTag("Generation").GetComponent<Text>().text) == 0)
+        {
+            m_neuralNetwork = new NeuralNetwork(2, 1, 6, 1, new Linear());
+        }
     }
 	
 	// Update is called once per frame
@@ -109,4 +111,14 @@ public class Bird : MonoBehaviour {
     }
 
     public double getFitness() { return m_fitness; }
+
+    public void setNeuralNetwork(NeuralNetwork neuralNetwork)
+    {
+        m_neuralNetwork = neuralNetwork;
+    }
+
+    public NeuralNetwork getNeuralNetwork()
+    {
+        return m_neuralNetwork;
+    }
 }

@@ -60,4 +60,21 @@ public class NeuralNetwork
     {
         return this.layers;
     }
+
+    public void printWeight()
+    {
+        foreach (Layer layer in layers)
+        {
+            string res = "";
+            foreach (Neuron neuron in layer.getNeurons())
+            {
+                foreach (double weight in neuron.getWeights())
+                {
+                    res += weight + " ";
+                }
+                res += "\t";
+            }
+            Debug.Log(res);
+        }
+    }
 }

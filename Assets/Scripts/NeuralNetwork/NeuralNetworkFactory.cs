@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NeuralNetworkFactory : MonoBehaviour
+public class NeuralNetworkFactory
 {
     private const double EVOLUTION_COEF = 0.1;
-    private const double MUTATION_CHANCE = 0.1;
+    private const double MUTATION_CHANCE = 1;
     private const double MUTATION_COEF = 0.5;
-
 
     public NeuralNetwork breedNetworks(NeuralNetwork fatherNetwork, NeuralNetwork motherNetwork)
     {
@@ -65,7 +64,6 @@ public class NeuralNetworkFactory : MonoBehaviour
         // For each layer
         for (int layerIndex = 0; layerIndex < network.getLayers().Count; layerIndex++)
         {
-
             // For each neuron
             for (int neuronIndex = 0; neuronIndex < network.getLayers()[layerIndex].getNeurons().Count; neuronIndex++)
             {
